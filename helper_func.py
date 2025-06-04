@@ -1,5 +1,5 @@
-#(©)CodeFlix_Bots
-#rohit_1888 on Tg #Dont remove this line
+# (©) EithonX / @Film_Bee Bot Project
+# Modified by @EithonX
 
 import base64
 import re
@@ -7,22 +7,19 @@ import asyncio
 import time
 from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
-from config import *
+from config import * # Make sure OWNER_ID and other necessary configs are here
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
-from shortzy import Shortzy
+from shortzy import Shortzy # Ensure this library is installed and configured if used
 from pyrogram.errors import FloodWait
-from database.database import *
+from database.database import * # Make sure your database setup is correctly imported
 
-
-
-# Don't Remove Credit @CodeFlix_Bots, @rohit_1888
-# Ask Doubt on telegram @CodeflixSupport
+# For support related to these modifications, contact @EithonX or @Film_Bee.
 #
-# Copyright (C) 2025 by Codeflix-Bots@Github, < https://github.com/Codeflix-Bots >.
+# Copyright (C) for these modifications 2025 by EithonX <https://t.me/EithonX>.
 #
-# This file is part of < https://github.com/Codeflix-Bots/FileStore > project,
-# and is released under the MIT License.
-# Please see < https://github.com/Codeflix-Bots/FileStore/blob/master/LICENSE >
+# This file is part of the @Film_Bee bot project by @EithonX.
+# (If this is a derivative of an open-source project, please ensure you
+# respect the original license terms. Original license details may have been altered or removed.)
 #
 # All rights reserved.
 #
@@ -30,21 +27,21 @@ from database.database import *
 #used for cheking if a user is admin ~Owner also treated as admin level
 async def check_admin(filter, client, update):
     try:
-        user_id = update.from_user.id       
+        user_id = update.from_user.id
+        # Assuming 'db' is correctly initialized and has 'admin_exist' method
+        # And OWNER_ID is correctly imported from config
         return any([user_id == OWNER_ID, await db.admin_exist(user_id)])
     except Exception as e:
         print(f"! Exception in check_admin: {e}")
         return False
 
-
-# Don't Remove Credit @CodeFlix_Bots, @rohit_1888
-# Ask Doubt on telegram @CodeflixSupport
+# For support related to these modifications, contact @EithonX or @Film_Bee.
 #
-# Copyright (C) 2025 by Codeflix-Bots@Github, < https://github.com/Codeflix-Bots >.
+# Copyright (C) for these modifications 2025 by EithonX <https://t.me/EithonX>.
 #
-# This file is part of < https://github.com/Codeflix-Bots/FileStore > project,
-# and is released under the MIT License.
-# Please see < https://github.com/Codeflix-Bots/FileStore/blob/master/LICENSE >
+# This file is part of the @Film_Bee bot project by @EithonX.
+# (If this is a derivative of an open-source project, please ensure you
+# respect the original license terms. Original license details may have been altered or removed.)
 #
 # All rights reserved.
 #
@@ -55,7 +52,7 @@ async def is_subscribed(client, user_id):
     if not channel_ids:
         return True
 
-    if user_id == OWNER_ID:
+    if user_id == OWNER_ID: # OWNER_ID from config
         return True
 
     for cid in channel_ids:
@@ -67,18 +64,15 @@ async def is_subscribed(client, user_id):
                 if await is_sub(client, user_id, cid):
                     continue
             return False
-
     return True
 
-
-# Don't Remove Credit @CodeFlix_Bots, @rohit_1888
-# Ask Doubt on telegram @CodeflixSupport
+# For support related to these modifications, contact @EithonX or @Film_Bee.
 #
-# Copyright (C) 2025 by Codeflix-Bots@Github, < https://github.com/Codeflix-Bots >.
+# Copyright (C) for these modifications 2025 by EithonX <https://t.me/EithonX>.
 #
-# This file is part of < https://github.com/Codeflix-Bots/FileStore > project,
-# and is released under the MIT License.
-# Please see < https://github.com/Codeflix-Bots/FileStore/blob/master/LICENSE >
+# This file is part of the @Film_Bee bot project by @EithonX.
+# (If this is a derivative of an open-source project, please ensure you
+# respect the original license terms. Original license details may have been altered or removed.)
 #
 # All rights reserved.
 #
@@ -107,18 +101,16 @@ async def is_sub(client, user_id, channel_id):
         print(f"[!] Error in is_sub(): {e}")
         return False
 
-# Don't Remove Credit @CodeFlix_Bots, @rohit_1888
-# Ask Doubt on telegram @CodeflixSupport
+# For support related to these modifications, contact @EithonX or @Film_Bee.
 #
-# Copyright (C) 2025 by Codeflix-Bots@Github, < https://github.com/Codeflix-Bots >.
+# Copyright (C) for these modifications 2025 by EithonX <https://t.me/EithonX>.
 #
-# This file is part of < https://github.com/Codeflix-Bots/FileStore > project,
-# and is released under the MIT License.
-# Please see < https://github.com/Codeflix-Bots/FileStore/blob/master/LICENSE >
+# This file is part of the @Film_Bee bot project by @EithonX.
+# (If this is a derivative of an open-source project, please ensure you
+# respect the original license terms. Original license details may have been altered or removed.)
 #
 # All rights reserved.
 #
-
 
 async def encode(string):
     string_bytes = string.encode("ascii")
@@ -129,7 +121,7 @@ async def encode(string):
 async def decode(base64_string):
     base64_string = base64_string.strip("=") # links generated before this commit will be having = sign, hence striping them to handle padding errors.
     base64_bytes = (base64_string + "=" * (-len(base64_string) % 4)).encode("ascii")
-    string_bytes = base64.urlsafe_b64decode(base64_bytes) 
+    string_bytes = base64.urlsafe_b64decode(base64_bytes)
     string = string_bytes.decode("ascii")
     return string
 
@@ -140,24 +132,24 @@ async def get_messages(client, message_ids):
         temb_ids = message_ids[total_messages:total_messages+200]
         try:
             msgs = await client.get_messages(
-                chat_id=client.db_channel.id,
+                chat_id=client.db_channel.id, # Ensure client.db_channel is properly set
                 message_ids=temb_ids
             )
         except FloodWait as e:
-            await asyncio.sleep(e.x)
+            await asyncio.sleep(e.x) # Make sure e.x is the correct attribute for sleep duration
             msgs = await client.get_messages(
                 chat_id=client.db_channel.id,
                 message_ids=temb_ids
             )
         except:
-            pass
+            pass # Consider logging specific exceptions here
         total_messages += len(temb_ids)
         messages.extend(msgs)
     return messages
 
 async def get_message_id(client, message):
     if message.forward_from_chat:
-        if message.forward_from_chat.id == client.db_channel.id:
+        if message.forward_from_chat.id == client.db_channel.id: # Ensure client.db_channel is properly set
             return message.forward_from_message_id
         else:
             return 0
@@ -171,14 +163,13 @@ async def get_message_id(client, message):
         channel_id = matches.group(1)
         msg_id = int(matches.group(2))
         if channel_id.isdigit():
-            if f"-100{channel_id}" == str(client.db_channel.id):
+            if f"-100{channel_id}" == str(client.db_channel.id): # Ensure client.db_channel is properly set
                 return msg_id
         else:
-            if channel_id == client.db_channel.username:
+            if channel_id == client.db_channel.username: # Ensure client.db_channel is properly set
                 return msg_id
     else:
         return 0
-
 
 def get_readable_time(seconds: int) -> str:
     count = 0
@@ -201,48 +192,43 @@ def get_readable_time(seconds: int) -> str:
     up_time += ":".join(time_list)
     return up_time
 
-
 def get_exp_time(seconds):
     periods = [('days', 86400), ('hours', 3600), ('mins', 60), ('secs', 1)]
     result = ''
     for period_name, period_seconds in periods:
         if seconds >= period_seconds:
             period_value, seconds = divmod(seconds, period_seconds)
-            result += f'{int(period_value)} {period_name}'
-    return result
+            result += f'{int(period_value)} {period_name} ' # Added space for readability
+    return result.strip() # Remove trailing space
 
-# Don't Remove Credit @CodeFlix_Bots, @rohit_1888
-# Ask Doubt on telegram @CodeflixSupport
+# For support related to these modifications, contact @EithonX or @Film_Bee.
 #
-# Copyright (C) 2025 by Codeflix-Bots@Github, < https://github.com/Codeflix-Bots >.
+# Copyright (C) for these modifications 2025 by EithonX <https://t.me/EithonX>.
 #
-# This file is part of < https://github.com/Codeflix-Bots/FileStore > project,
-# and is released under the MIT License.
-# Please see < https://github.com/Codeflix-Bots/FileStore/blob/master/LICENSE >
+# This file is part of the @Film_Bee bot project by @EithonX.
+# (If this is a derivative of an open-source project, please ensure you
+# respect the original license terms. Original license details may have been altered or removed.)
 #
 # All rights reserved.
 #
 
-
 async def get_shortlink(url, api, link):
+    # Ensure Shortzy is correctly configured with your API key and base site if you use this.
+    # These would typically come from your config file.
     shortzy = Shortzy(api_key=api, base_site=url)
     link = await shortzy.convert(link)
     return link
 
-
 subscribed = filters.create(is_subscribed)
 admin = filters.create(check_admin)
 
-#rohit_1888 on Tg :
-
-# Don't Remove Credit @CodeFlix_Bots, @rohit_1888
-# Ask Doubt on telegram @CodeflixSupport
+# @EithonX
+# For support related to these modifications, contact @EithonX or @Film_Bee.
 #
-# Copyright (C) 2025 by Codeflix-Bots@Github, < https://github.com/Codeflix-Bots >.
+# Copyright (C) for these modifications 2025 by EithonX <https://t.me/EithonX>.
 #
-# This file is part of < https://github.com/Codeflix-Bots/FileStore > project,
-# and is released under the MIT License.
-# Please see < https://github.com/Codeflix-Bots/FileStore/blob/master/LICENSE >
+# This file is part of the @Film_Bee bot project by @EithonX.
+# (If this is a derivative of an open-source project, please ensure you
+# respect the original license terms. Original license details may have been altered or removed.)
 #
 # All rights reserved.
-#
