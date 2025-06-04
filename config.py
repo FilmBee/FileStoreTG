@@ -6,14 +6,14 @@ from logging.handlers import RotatingFileHandler
 # Your information will be used below
 #--------------------------------------------
 #Bot token @Botfather - IMPORTANT: REPLACE WITH YOUR ACTUAL TOKEN
-TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "YOUR_ACTUAL_TG_BOT_TOKEN_HERE") # <<< IMPORTANT: REPLACE THIS
-APP_ID = int(os.environ.get("APP_ID", "")) #Your API ID from my.telegram.org - IMPORTANT: ADD YOURS
-API_HASH = os.environ.get("API_HASH", "") #Your API Hash from my.telegram.org - IMPORTANT: ADD YOURS
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "0") # <<< IMPORTANT: REPLACE THIS
+APP_ID = int(os.environ.get("APP_ID", "0")) #Your API ID from my.telegram.org - IMPORTANT: ADD YOURS
+API_HASH = os.environ.get("API_HASH", "0") #Your API Hash from my.telegram.org - IMPORTANT: ADD YOURS
 #--------------------------------------------
 
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", "")) # <<< IMPORTANT: Your db channel Id (e.g., -100xxxxxxxxxx)
 OWNER = os.environ.get("OWNER", "EithonX") # Owner username without @ - MODIFIED
-OWNER_ID = int(os.environ.get("OWNER_ID", "")) # <<< IMPORTANT: Owner id (Your Telegram User ID)
+OWNER_ID = int(os.environ.get("OWNER_ID", "0")) # <<< IMPORTANT: Owner id (Your Telegram User ID)
 #--------------------------------------------
 PORT = os.environ.get("PORT", "8001")
 #--------------------------------------------
